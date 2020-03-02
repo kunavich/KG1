@@ -36,7 +36,9 @@ public class KG1 extends Application {
     
     private void init(Stage primaryStage) {
         Group root = new Group();
+        
         primaryStage.setScene(new Scene(root));
+        primaryStage.setMinWidth(500);
         final ColorPicker colorPicker = new ColorPicker(Color.GRAY);
         ToolBar standardToolbar = ToolBarBuilder.create().items(colorPicker).build();
 
@@ -142,7 +144,16 @@ public class KG1 extends Application {
             c=(1-r-k)/(1-k);
             m=(1-g-k)/(1-k);
             y=(1-b-k)/(1-k);
-            return("CMYK\n "+c*100+"\n "+m*100+"\n "+y*100+"\n "+k*100);
+            String s="";
+            if(c<0)
+                s+= ("error to low caen\n"+c+"\n");
+            if(m<0)
+                s+=("error to low magenta\n"+m+"\n");
+            if(y<0)
+                s+= ("error to low yellow\n"+y+"\n");
+            if(s.equals(""))
+                return("CMYK\n "+c+"\n "+m+"\n "+y+"\n "+k);
+            return s;
             //CMYK 
         }
         if(i==1)
@@ -183,6 +194,7 @@ public class KG1 extends Application {
            {
                h=((r-g)/(max-min) +4)*60;
            }
+           
            return("HSV\n "+h+"\n "+s+"\n "+v);
         }
         return("RGB\n "+r*255+"\n "+g*255+"\n "+b*255);
